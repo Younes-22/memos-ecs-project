@@ -45,9 +45,3 @@ variable "internet_cidr" {
   type = string
   default = "0.0.0.0/0"
 }
-
-variable "vpc_id" {
-    description = "VPC ID"
-    type = string
-    default = output.vpc_id
-}

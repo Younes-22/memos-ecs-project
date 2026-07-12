@@ -54,7 +54,7 @@ resource "aws_subnet" "private_1" {
     }
 }
 
-resource "aws_subnet" "private-2" {
+resource "aws_subnet" "private_2" {
     vpc_id = aws_vpc.this.id
     cidr_block = var.private_subnet2_cidr
     availability_zone = var.aws_az_2
@@ -110,7 +110,7 @@ resource "aws_route_table" "private" {
 }
 
 resource "aws_route_table_association" "public_1" {
-    subnet_id = aws_subnet.public-1.id
+    subnet_id = aws_subnet.public_1.id
     route_table_id = aws_route_table.public.id
 }
 
@@ -125,7 +125,7 @@ resource "aws_route_table_association" "private_1" {
 }
 
 resource "aws_route_table_association" "private_2" {
-    subnet_id = aws_subnet.private-2.id
+    subnet_id = aws_subnet.private_2.id
     route_table_id = aws_route_table.private.id
 }
 

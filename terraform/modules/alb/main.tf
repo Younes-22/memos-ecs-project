@@ -1,7 +1,7 @@
 resource "aws_security_group" "alb_sg" {
-    name = "alb-sg"
-    description = "security group for application load balancer"
-    vpc_id = var.vpc_id
+  name        = "alb-sg"
+  description = "security group for application load balancer"
+  vpc_id      = var.vpc_id
 
   ingress {
     description = "Allow HTTP"
@@ -24,14 +24,14 @@ resource "aws_security_group" "alb_sg" {
 }
 
 resource "aws_lb" "this" {
-    name = "ecs-alb"
-    internal = false
-    load_balancer_type = "application"
+  name               = "ecs-alb"
+  internal           = false
+  load_balancer_type = "application"
 
-    security_groups = [aws_security_group.alb_sg.id]
-    subnets = var.public_subnet_ids
+  security_groups = [aws_security_group.alb_sg.id]
+  subnets         = var.public_subnet_ids
 
-    enable_deletion_protection = false
+  enable_deletion_protection = false
 
   tags = {
     Name = "ecs-alb"
@@ -39,28 +39,28 @@ resource "aws_lb" "this" {
 }
 
 resource "aws_lb_target_group" "this" {
-    name = "ecs-tg"
-    port = 8081
-    protocol = "HTTP"
-    target_type = "ip"
-    vpc_id = var.vpc_id
+  name        = "ecs-tg"
+  port        = 8081
+  protocol    = "HTTP"
+  target_type = "ip"
+  vpc_id      = var.vpc_id
 
-    health_check {
-      path = "/"
-      protocol = "HTTP"
-      healthy_threshold = 2
-      unhealthy_threshold = 2
-    }
+  health_check {
+    path                = "/"
+    protocol            = "HTTP"
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+  }
 }
 
 resource "aws_lb_listener" "http" {
-    load_balancer_arn = aws_lb.this.arn
-    port = 80
-    protocol = "HTTP"
+  load_balancer_arn = aws_lb.this.arn
+  port              = 80
+  protocol          = "HTTP"
 
-    default_action {
-      type = "forward"
-      target_group_arn = aws_lb_target_group.this.arn
-    }
-  
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.this.arn
+  }
+
 }
