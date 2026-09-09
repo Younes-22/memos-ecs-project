@@ -1,5 +1,5 @@
 output "alb_arn" {
-  value = load_balancer_arn.arn
+  value = aws_lb.this.arn
 }
 
 output "target_group_arn" {
