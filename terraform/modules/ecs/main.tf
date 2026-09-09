@@ -38,10 +38,15 @@ resource "aws_ecs_task_definition" "this" {
     memory = "512"
     network_mode = "awsvpc"
     execution_role_arn = var.execution_role_arn
+
+    runtime_platform {
+        operating_system_family = "LINUX"
+        cpu_architecture = "ARM64"
+  }
   container_definitions = jsonencode([
     {
       name      = "memos" // needs to match service name
-      image     = "service-first"
+      image     = "872450837551.dkr.ecr.eu-west-2.amazonaws.com/my-memos-app:latest"
       cpu       = 256
       memory    = 512
       essential = true
@@ -72,6 +77,7 @@ resource "aws_ecs_service" "memos" {
   cluster = aws_ecs_cluster.this.id
   task_definition = aws_ecs_task_definition.this.arn
   desired_count = 1
+  launch_type = "FARGATE"
 
   network_configuration {
     subnets = [
@@ -85,7 +91,7 @@ resource "aws_ecs_service" "memos" {
   }
 
   load_balancer {
-    target_group_arn = module.alb.target_group_arn
+    target_group_arn = var.target_group_arn
     container_name = "memos"
     container_port = 8081
   }
