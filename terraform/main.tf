@@ -15,18 +15,6 @@ module "vpc" {
   source = "./modules/vpc"
 }
 
-module "alb" {
-  source = "./modules/alb"
-
-  vpc_id            = module.vpc.vpc_id
-  public_subnet_ids = [
-    module.vpc.public_subnet_1_id,
-    module.vpc.public_subnet_2_id
-  ]
-
-  certificate_arn = module.acm.certificate_arn
-}
-
 module "ecs" {
   source                = "./modules/ecs"
   vpc_id                = module.vpc.vpc_id
@@ -43,6 +31,10 @@ module "iam" {
   source = "./modules/iam"
 }
 
+module "route53" {
+  source = "./modules/route53"
+}
+
 module "acm" {
   source = "./modules/acm"
 
@@ -50,8 +42,23 @@ module "acm" {
   route53_zone_id = module.route53.zone_id
 }
 
-module "route53" {
-  source       = "./modules/route53"
+module "alb" {
+  source = "./modules/alb"
+
+  vpc_id = module.vpc.vpc_id
+
+  public_subnet_ids = [
+    module.vpc.public_subnet_1_id,
+    module.vpc.public_subnet_2_id
+  ]
+
+  certificate_arn = module.acm.certificate_arn
+}
+
+module "dns" {
+  source = "./modules/dns"
+
+  zone_id      = module.route53.zone_id
   alb_dns_name = module.alb.alb_dns_name
   alb_zone_id  = module.alb.alb_zone_id
 }

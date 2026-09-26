@@ -24,3 +24,9 @@ variable "execution_role_arn" {
   type = string
   description = "IAM role used by ECS to execute the task"
 }
+
+variable "container_image" {
+  description = "Docker image to run"   
+  type = string
+  default     = "872450837551.dkr.ecr.eu-west-2.amazonaws.com/my-memos-app:latest"
+}

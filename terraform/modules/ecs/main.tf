@@ -46,7 +46,7 @@ resource "aws_ecs_task_definition" "this" {
   container_definitions = jsonencode([
     {
       name      = "memos" // needs to match service name
-      image     = "872450837551.dkr.ecr.eu-west-2.amazonaws.com/my-memos-app:latest"
+      image     = var.container_image
       cpu       = 256
       memory    = 512
       essential = true
