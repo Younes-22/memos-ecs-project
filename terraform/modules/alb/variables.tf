@@ -10,5 +10,5 @@ variable "public_subnet_ids" {
 
 variable "certificate_arn" {
   description = "ARN of the ACM certificate"
-  type = string
+  type        = string
 }

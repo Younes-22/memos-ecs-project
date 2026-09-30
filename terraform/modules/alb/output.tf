@@ -12,10 +12,10 @@ output "alb_security_group_id" {
 
 output "alb_dns_name" {
   description = "DNS name of the ALB"
-  value = aws_lb.this.dns_name
+  value       = aws_lb.this.dns_name
 }
 
 output "alb_zone_id" {
   description = "Canonical hosted zone ID of the ALB"
-  value = aws_lb.this.zone_id
+  value       = aws_lb.this.zone_id
 }
