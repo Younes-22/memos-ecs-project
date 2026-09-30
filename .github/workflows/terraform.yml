@@ -1,0 +1,78 @@
+name: Terraform Deploy
+
+on:
+  workflow_run:
+    workflows:
+      - Build & Push Docker
+    types:
+      - completed
+    branches:
+      - main
+
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  terraform:
+    name: Terraform Plan & Apply
+    runs-on: ubuntu-latest
+
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
+
+    defaults:
+      run:
+        working-directory: ./terraform
+
+    env:
+      AWS_REGION: eu-west-2
+      TF_VAR_domain_name: younesblog.org
+      ECR_REPOSITORY: my-memos-app
+      IMAGE_SHA: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: rn:aws:iam::872450837551:role/github-actions-role
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Get AWS account ID
+        run: |
+          AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+          echo "AWS_ACCOUNT_ID=$AWS_ACCOUNT_ID" >> "$GITHUB_ENV"
+
+      - name: Set container image
+        run: |
+          echo "TF_VAR_container_image=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY}:${IMAGE_SHA}" >> "$GITHUB_ENV"
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v4
+
+      - name: Terraform Init
+        run: terraform init -input=false
+
+      - name: Terraform Format Check
+        run: terraform fmt -check
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan -input=false
+
+      - name: Terraform Apply
+        run: terraform apply -input=false tfplan
+
+      - name: Summary
+        if: success()
+        run: echo "Terraform deployment complete"
