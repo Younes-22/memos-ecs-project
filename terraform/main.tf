@@ -22,8 +22,8 @@ module "ecs" {
   private_subnet_1_id   = module.vpc.private_subnet_1_id
   private_subnet_2_id   = module.vpc.private_subnet_2_id
   target_group_arn      = module.alb.target_group_arn
-
   execution_role_arn = module.iam.ecs_task_execution_role_arn
+  container_image = var.container_image
 
 }
 
