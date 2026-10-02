@@ -1,0 +1,44 @@
+name: Destroy
+
+on: 
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  destroy:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./terraform
+
+    env:
+      AWS_REGION: eu-west-2
+      TF_VAR_domain_name: younesblog.org
+      TF_VAR_container_image: 872450837551.dkr.ecr.eu-west-2.amazonaws.com/my-memos-app:latest
+    steps:
+
+      - name: checkout repository
+        uses: actions/checkout@v5
+
+      - name: configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: arn:aws:iam::872450837551:role/memos-github-terraform-role
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: setup Terraform
+        uses: hashicorp/setup-terraform@v4
+
+      - name: Terraform init
+        run: terraform init -input=false
+
+      - name: Terraform Destroy
+        run: terraform destroy -input=false -auto-approve
+
+      - name: Summary
+        if: success()
+        run: echo "Terraform Destroy Complete"
