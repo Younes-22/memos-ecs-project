@@ -76,3 +76,6 @@ jobs:
       - name: Summary
         if: success()
         run: echo "Terraform deployment complete"
+      
+      - name: Post-deploy health check
+        run: curl --fail --silent --show-error https://lab.younesblog.org/health
