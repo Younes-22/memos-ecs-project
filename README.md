@@ -225,6 +225,12 @@ Terraform's CI/CD role is also separate from the bootstrap resources so that des
 │   ├── Dockerfile
 │   └── .dockerignore
 │
+├── screenshots/
+│   ├── architecture.png
+│   ├── build-and-push.png
+│   ├── terraform.png
+│   └── destroy.png
+│
 ├── terraform/
 │   ├── bootstrap/
 │   │   └── ...
@@ -238,10 +244,18 @@ Terraform's CI/CD role is also separate from the bootstrap resources so that des
 │   │   ├── route53/
 │   │   └── vpc/
 │   │
-│   └── ...
+│   ├── backend.tf
+│   ├── main.tf
+│   ├── variables.tf
+│   ├── outputs.tf
+│   ├── providers.tf
+│   ├── data.tf
+│   └── versions.tf
 │
+├── .gitignore
 └── README.md
 ```
+
 
 The Terraform configuration is separated into:
 
