@@ -31,38 +31,9 @@ The project demonstrates the progression from manual AWS configuration to Infras
 
 The application is deployed to AWS using the following architecture:
 
-```text
-                         Internet
-                            │
-                            ▼
-                     Cloudflare DNS
-                            │
-                            ▼
-                   Route 53 Hosted Zone
-                            │
-                            ▼
-                    Application Load
-                       Balancer
-                     ┌──────┴──────┐
-                     │             │
-                   HTTPS          HTTP
-                     │
-                     ▼
-                Target Group
-                     │
-          ┌──────────┴──────────┐
-          │                     │
-      Private Subnet        Private Subnet
-       eu-west-2a             eu-west-2b
-          │                     │
-       ECS Task              ECS Task
-       (optional)            (optional)
-```
+![AWS Architecture](./screenshots/ECS%20Memos%20Diagram.drawio.png)
 
-The current ECS service runs **one task**, while the networking layer spans two Availability Zones with a NAT Gateway in each AZ.
-
-![AWS Architecture](./screenshots/ECS Memos Diagram.drawio.png)
-
+This diagram was made with draw.io
 ---
 
 ## Live Application
