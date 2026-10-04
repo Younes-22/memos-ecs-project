@@ -497,6 +497,21 @@ The destroy workflow provides a manual way to remove the application infrastruct
 
 ---
 
+# Memos Application 
+
+![memos](./screenshots/memos-online.png)
+
+
+## Local Docker Deployment
+![memos](./screenshots/memos-local.png)
+
+
+## Live AWS Deployment
+
+
+
+---
+
 # AWS Runtime Checks
 
 The deployed environment can be verified through the AWS console by checking:
