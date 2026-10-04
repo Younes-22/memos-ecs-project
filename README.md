@@ -31,7 +31,7 @@ The project demonstrates the progression from manual AWS configuration to Infras
 
 The application is deployed to AWS using the following architecture:
 
-![AWS Architecture](./docs/ECS%20Memos%20Diagram.drawio.png)
+![AWS Architecture](./docs/ECS-Memos-Diagram.drawio.png)
 
 This diagram was made with draw.io
 ---
