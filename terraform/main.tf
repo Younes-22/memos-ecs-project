@@ -1,29 +1,16 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 6.0"
-    }
-  }
-}
-
-provider "aws" {
-  region = "eu-west-2"
-}
-
 module "vpc" {
   source = "./modules/vpc"
 }
 
 module "ecs" {
-  source                = "./modules/ecs"
-  vpc_id                = module.vpc.vpc_id
+  source = "./modules/ecs"
+  vpc_id = module.vpc.vpc_id
   alb_security_group_id = module.alb.alb_security_group_id
-  private_subnet_1_id   = module.vpc.private_subnet_1_id
-  private_subnet_2_id   = module.vpc.private_subnet_2_id
-  target_group_arn      = module.alb.target_group_arn
-  execution_role_arn    = module.iam.ecs_task_execution_role_arn
-  container_image       = var.container_image
+  private_subnet_1_id = module.vpc.private_subnet_1_id
+  private_subnet_2_id = module.vpc.private_subnet_2_id
+  target_group_arn = module.alb.target_group_arn
+  execution_role_arn = module.iam.ecs_task_execution_role_arn
+  container_image = var.container_image
 
 }
 
@@ -58,7 +45,7 @@ module "alb" {
 module "dns" {
   source = "./modules/dns"
 
-  zone_id      = module.route53.zone_id
+  zone_id = module.route53.zone_id
   alb_dns_name = module.alb.alb_dns_name
   alb_zone_id  = module.alb.alb_zone_id
 }
