@@ -61,9 +61,7 @@ The application is deployed to AWS using the following architecture:
 
 The current ECS service runs **one task**, while the networking layer spans two Availability Zones with a NAT Gateway in each AZ.
 
-![Architecture Diagram]
-
-[screenshot]
+![AWS Architecture](./screenshots/ECS Memos Diagram.drawio.png)
 
 ---
 
@@ -498,19 +496,19 @@ The project was validated at multiple levels.
 
 The workflow builds the production image and pushes it to ECR using the Git commit SHA.
 
-[screenshot]
+![Workflow](./screenshots/build-and-push-workflow.png)
 
 ## Terraform Deployment
 
 The Terraform workflow validates, plans and applies the infrastructure before performing the deployment health check.
 
-[screenshot]
+![Workflow](./screenshots/terraform-plan-and-appy-workflow.png)
 
 ## Infrastructure Teardown
 
 The destroy workflow provides a manual way to remove the application infrastructure while retaining the long-lived bootstrap resources.
 
-[screenshot]
+![Workflow](./screenshots/destroy-workflow.png)
 
 ---
 
