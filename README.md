@@ -31,7 +31,7 @@ The project demonstrates the progression from manual AWS configuration to Infras
 
 The application is deployed to AWS using the following architecture:
 
-![AWS Architecture](./screenshots/ECS%20Memos%20Diagram.drawio.png)
+![AWS Architecture](./docs/ECS%20Memos%20Diagram.drawio.png)
 
 This diagram was made with draw.io
 ---
@@ -196,7 +196,7 @@ Terraform's CI/CD role is also separate from the bootstrap resources so that des
 │   ├── Dockerfile
 │   └── .dockerignore
 │
-├── screenshots/
+├── docs/
 │   ├── architecture.png
 │   ├── build-and-push.png
 │   ├── terraform.png
@@ -261,12 +261,15 @@ This prevents destroying the application environment from also destroying the in
 
 ## Prerequisites
 
-Install:
+- AWS CLI
+- Terraform
+- Docker
+- Git
+- AWS account
+- GitHub repository with Actions enabled
+- An existing Amazon ECR repository named `my-memos-app`
 
-* Git
-* Docker
-* Terraform
-* AWS CLI
+> The `my-memos-app` ECR repository must be created before running the GitHub Actions workflow. The workflow pushes the built Docker image to this repository; it does not create the repository automatically.
 
 ## Clone the Repository
 
@@ -481,32 +484,34 @@ The project was validated at multiple levels.
 
 The workflow builds the production image and pushes it to ECR using the Git commit SHA.
 
-![Workflow](./screenshots/build-and-push-workflow.png)
+![Workflow](./docs/build-and-push-workflow.png)
 
 ## Terraform Deployment
 
 The Terraform workflow validates, plans and applies the infrastructure before performing the deployment health check.
 
-![Workflow](./screenshots/terraform-plan-and-appy-workflow.png)
+![Workflow](./docs/terraform-plan-and-appy-workflow.png)
 
 ## Infrastructure Teardown
 
 The destroy workflow provides a manual way to remove the application infrastructure while retaining the long-lived bootstrap resources.
 
-![Workflow](./screenshots/destroy-workflow.png)
+![Workflow](./docs/destroy-workflow.png)
 
 ---
 
 ## Live AWS Deployment
 
+![memos](./docs/recording.mp4)
+
 
 # Memos Application 
 
-![memos](./screenshots/memos-online.png)
+![memos](./docs/memos-online.png)
 
 
 ## Local Docker Deployment
-![memos](./screenshots/memos-local.png)
+![memos](./docs/memos-local.png)
 
 
 ---

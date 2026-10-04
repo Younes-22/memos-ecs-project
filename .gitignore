@@ -15,9 +15,6 @@ override.tf.json
 *_override.tf
 *_override.tf.json
 
-# Terraform lock file
-# Keep this if you're working with others or CI
-# Ignore it only if you have a specific reason
 # .terraform.lock.hcl
 
 # Sensitive plan files
