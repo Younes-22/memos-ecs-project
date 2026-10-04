@@ -499,6 +499,7 @@ The destroy workflow provides a manual way to remove the application infrastruct
 
 ## Live AWS Deployment
 
+
 # Memos Application 
 
 ![memos](./screenshots/memos-online.png)
