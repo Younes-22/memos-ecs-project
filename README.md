@@ -502,7 +502,7 @@ The destroy workflow provides a manual way to remove the application infrastruct
 
 ## Live AWS Deployment
 
-[![Memos application demo](./docs/recording.gif)](./docs/recording.mp4)
+![Memos application demo](./docs/recording.mp4)
 
 # Memos Application 
 
